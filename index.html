@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katale - Game Tebak Kata Daerah</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Pixel Art -->
+    <canvas id="pixel-bg"></canvas>
+
+    <div class="game-wrapper">
+        <header>
+            <h1>KATALE</h1>
+            <!-- Papan Skor Beruntun -->
+            <div id="score-container">Streak: <span id="current-score">0</span> 🔥</div>
+        </header>
+
+        <main>
+            <!-- Grid Tempat Huruf -->
+            <div id="game-grid" class="grid-container"></div>
+
+            <!-- Keyboard Virtual -->
+            <div id="keyboard" class="keyboard-container"></div>
+        </main>
+    </div>
+
+    <!-- Modal Hanya Muncul Jika Kalah (Game Over) -->
+    <div id="game-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-title">Game Over! 😢</h2>
+            <p id="modal-message">Kesempatan habis.</p>
+            <button id="btn-restart">Main Lagi dari 0</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

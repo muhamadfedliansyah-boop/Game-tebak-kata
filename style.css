@@ -1,0 +1,231 @@
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121213;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Canvas Background */
+#pixel-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    image-rendering: pixelated; /* Mengunci efek pixel art agar tidak blur */
+}
+
+/* Pembungkus Konten Utama */
+.game-wrapper {
+    position: relative;
+    z-index: 2;
+    background: rgba(18, 18, 19, 0.75); /* Efek transparan mika */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 90vh;
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+}
+
+header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    background: linear-gradient(45deg, #F9B2D7, #CFECF3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#score-container {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #CFECF3;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+#current-score {
+    color: #F6FFDC;
+    font-size: 1.3rem;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    width: 100%;
+}
+
+/* Grid Game */
+.grid-container {
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 5px;
+    max-width: 95vw;
+    height: 380px;
+}
+
+.grid-row {
+    display: grid;
+    gap: 5px;
+}
+
+.tile {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    user-select: none;
+    color: #ffffff;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.tile[data-state="tapped"] {
+    border-color: #CFECF3;
+    animation: pop 0.1s ease-in-out;
+}
+
+/* === INTEGRASI PALET WARNA BARU === */
+.tile.correct {
+    background-color: #DAF9DE; /* Hijau Mint */
+    border-color: #DAF9DE;
+    color: #121213; /* Teks gelap agar terbaca di warna pastel */
+}
+.tile.present {
+    background-color: #F6FFDC; /* Kuning Mentega */
+    border-color: #F6FFDC;
+    color: #121213;
+}
+.tile.absent {
+    background-color: #F9B2D7; /* Merah Muda Pastel */
+    border-color: #F9B2D7;
+    color: #121213;
+}
+
+/* Keyboard Virtual */
+.keyboard-container {
+    width: 100%;
+    padding: 0 5px;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 6px;
+}
+
+.key {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    margin: 0 2px;
+    height: 50px;
+    flex: 1;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    user-select: none;
+    font-size: 0.9rem;
+}
+
+.key.wide {
+    flex: 1.5;
+    font-size: 0.75rem;
+}
+
+/* Sinkronisasi warna baru pada Keyboard */
+.key.correct { background-color: #DAF9DE; color: #121213; }
+.key.present { background-color: #F6FFDC; color: #121213; }
+.key.absent { background-color: #F9B2D7; color: #121213; opacity: 0.6; }
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.modal.hidden { display: none; }
+
+.modal-content {
+    background-color: #1e1e1f;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#btn-restart {
+    background-color: #CFECF3;
+    color: #121213;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* Animasi */
+@keyframes pop {
+    0% { transform: scale(0.9); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.flip {
+    animation: flipIn 0.5s ease-in-out forwards;
+}
+
+@keyframes flipIn {
+    0% { transform: rotateX(0deg); }
+    45% { transform: rotateX(90deg); }
+    55% { transform: rotateX(90deg); }
+    100% { transform: rotateX(0deg); }
+}
